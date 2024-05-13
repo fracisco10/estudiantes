@@ -1,23 +1,41 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [students, setStudents] = useState([]);
+  const [newStudentName, setNewStudentName] = useState('');
+
+  const addStudent = () => {
+    if (newStudentName.trim() !== '') {
+      setStudents([...students, newStudentName]);
+      setNewStudentName('');
+    }
+  };
+ss
+  const deleteStudent = (index) => {
+    const newStudents = [...students];
+    newStudents.splice(index, 1);
+    setStudents(newStudents);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Registro de Estudiantes</h1>
+      <input
+        type="text"
+        value={newStudentName}
+        onChange={(e) => setNewStudentName(e.target.value)}
+        placeholder="Nombre del Estudiante"
+      />
+      <button onClick={addStudent}>Agregar Estudiante</button>
+      <ul>
+        {students.map((student, index) => (
+          <li key={index}>
+            {student}
+            <button onClick={() => deleteStudent(index)}>Eliminar</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
